@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Unit 3 Moore’s Law｜第01張試播</title>
+<style>
+:root { font: 18px/1.55 system-ui, sans-serif; color: #18352e; background: #f0f6f2; }
+* { box-sizing: border-box; }
+body { margin: 0; padding: 1rem 1rem calc(1.5rem + env(safe-area-inset-bottom)); }
+main { max-width: 36rem; margin: 1rem auto; }
+h1 { font-size: clamp(1.6rem, 6vw, 2.5rem); line-height: 1.15; }
+.kicker { color: #30665a; font-weight: 700; }
+.card { background: #fff; border: 1px solid #bad0c4; border-radius: 1rem; padding: 1.2rem; }
+.card p[lang] { font-size: clamp(1.3rem, 5vw, 1.75rem); }
+audio { width: 100%; display: block; }
+button { width: 100%; margin-top: 1rem; padding: .75rem; border: 0; border-radius: .65rem; background: #096451; color: white; font: inherit; font-weight: 700; cursor: pointer; }
+button:focus-visible { outline: 3px solid #bc7100; outline-offset: 3px; }
+.status { font-size: .9rem; }
+</style>
+</head>
+<body>
+<main>
+  <div class="kicker">CORE VOCABULARY · #01 試播</div>
+  <h1>Unit 3 Moore’s Law</h1>
+  <div class="card">
+    <section id="front">
+      <div class="kicker">正面 · 單字</div>
+      <p lang="en"><strong>Moore’s Law</strong></p>
+      <audio controls preload="none" aria-label="播放 Moore’s Law 單字">
+        <source src="https://chiouw.github.io/unit3-moores-law-/audio/01-word.mp3" type="audio/mpeg">
+      </audio>
+      <p class="status" aria-live="polite">點 ▶ 播放單字。</p>
+    </section>
+    <section id="back" hidden>
+      <div class="kicker">背面 · 例句</div>
+      <p lang="en">Many years ago, chips had fewer transistors. <strong>Moore’s Law</strong> describes the idea that the number of transistors on a chip doubles about every two years.</p>
+      <audio controls preload="none" aria-label="播放 Moore’s Law 例句">
+        <source src="https://chiouw.github.io/unit3-moores-law-/audio/01-sentence.mp3" type="audio/mpeg">
+      </audio>
+      <p class="status" aria-live="polite">點 ▶ 播放完整例句。</p>
+    </section>
+    <button id="flip" type="button" aria-controls="front back">翻到例句 →</button>
+  </div>
+</main>
+<script>
+const front = document.querySelector('#front');
+const back = document.querySelector('#back');
+const flip = document.querySelector('#flip');
+flip.addEventListener('click', () => {
+  const wasFront = !front.hidden;
+  (wasFront ? front : back).querySelector('audio').pause();
+  front.hidden = wasFront;
+  back.hidden = !wasFront;
+  flip.textContent = wasFront ? '← 回到單字' : '翻到例句 →';
+});
+for (const audio of document.querySelectorAll('audio')) {
+  const status = audio.nextElementSibling;
+  audio.addEventListener('ended', () => { status.textContent = '已播放完畢，可以重聽。'; });
+  audio.querySelector('source').addEventListener('error', () => {
+    status.textContent = '音檔載入失敗。請檢查網路後重新整理再試。';
+  });
+}
+</script>
+</body>
+</html>
